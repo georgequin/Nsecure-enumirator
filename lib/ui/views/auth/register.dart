@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/countries.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:kenmack/app/app.router.dart';
-import 'package:openapi/api.dart';
+import 'package:nsecure/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../../app/app.locator.dart';
 import '../../common/app_colors.dart';
 import '../../common/ui_helpers.dart';

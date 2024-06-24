@@ -1,6 +1,6 @@
 import 'package:stacked/stacked.dart';
 
-import 'package:kenmack/app/app.locator.dart';
+import 'package:nsecure/app/app.locator.dart';
 
 import '../../../core/utils/local_store_dir.dart';
 import '../../../core/utils/local_stotage.dart';

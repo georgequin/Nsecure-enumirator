@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:kenmack/ui/views/services/service_viewmodel.dart';
+import 'package:nsecure/ui/views/services/service_viewmodel.dart';
 import 'package:openapi/api.dart';
 import 'package:stacked/stacked.dart';
 import '../../../state.dart';

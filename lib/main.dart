@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kenmack/state.dart';
-import 'package:kenmack/ui/common/app_colors.dart';
+import 'package:nsecure/state.dart';
+import 'package:nsecure/ui/common/app_colors.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'app/app.bottomsheets.dart';

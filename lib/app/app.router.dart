@@ -36,14 +36,15 @@
 import 'package:flutter/foundation.dart' as _i23;
 import 'package:flutter/material.dart' as _i21;
 import 'package:flutter/material.dart';
-import 'package:kenmack/ui/views/auth/login.dart' as _i5;
-import 'package:kenmack/ui/views/startup/startup_view.dart' as i3;
+import 'package:nsecure/ui/views/auth/login.dart' as _i5;
+import 'package:nsecure/ui/views/startup/startup_view.dart' as i3;
 import 'package:stacked/stacked.dart' as _i1;
 import 'package:stacked_services/stacked_services.dart' as _i27;
 
 import '../ui/views/auth/register.dart';
 import '../ui/views/change_password/change_password_view.dart'as _i17;
 import '../ui/views/dashboard/dashboard_view.dart' as _i7;
+import '../ui/views/dashboard/comfirm_id_card.dart' as _i9;
 import '../ui/views/home/home_view.dart' as i6;
 import '../ui/views/onboarding/onboading_view.dart' as i4;
 
@@ -59,6 +60,8 @@ class Routes {
   static const loginView = '/login-view';
 
   static const dashboardView = '/dashboard-view';
+
+  static const confirmIdView = '/confirm-id-view';
 
   static const profileView = '/profile-view';
 
@@ -111,6 +114,10 @@ class StackedRouter extends _i1.RouterBase {
     _i1.RouteDef(
       Routes.dashboardView,
       page: _i7.DashboardView,
+    ),
+    _i1.RouteDef(
+      Routes.confirmIdView,
+      page: _i9.ConfirmIdCard,
     ),
     // _i1.RouteDef(
     //   Routes.profileView,
@@ -171,6 +178,12 @@ class StackedRouter extends _i1.RouterBase {
     _i7.DashboardView: (data) {
       return _i21.MaterialPageRoute<dynamic>(
         builder: (context) =>  _i7.DashboardView(),
+        settings: data,
+      );
+    },
+    _i9.ConfirmIdCard: (data) {
+      return _i21.MaterialPageRoute<dynamic>(
+        builder: (context) =>  _i9.ConfirmIdCard(),
         settings: data,
       );
     },
@@ -378,6 +391,20 @@ extension NavigatorStateExtension on _i27.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.dashboardView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToConfirmIdView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+    transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.confirmIdView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

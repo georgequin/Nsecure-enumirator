@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:kenmack/app/app.router.dart';
-import 'package:kenmack/ui/views/account/account_view.dart';
-import 'package:kenmack/ui/views/notification/notification_view.dart';
-import 'package:kenmack/ui/views/services/service_view.dart';
+import 'package:nsecure/app/app.router.dart';
+import 'package:nsecure/ui/views/account/account_view.dart';
+import 'package:nsecure/ui/views/notification/notification_view.dart';
+import 'package:nsecure/ui/views/services/service_view.dart';
 import 'package:openapi/api.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';

@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kenmack/ui/common/app_colors.dart';
+import 'package:nsecure/ui/common/app_colors.dart';
 
 class DriverCard extends StatelessWidget {
   final String imagePath;
@@ -24,7 +24,7 @@ class DriverCard extends StatelessWidget {
     return InkWell(
       onTap: onTap, // Use the onTap callback when the item is tapped
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 3),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white, // Replace with your color

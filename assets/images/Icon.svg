@@ -2,7 +2,7 @@
 <rect x="2" y="2" width="32" height="32" rx="16" fill="#F0F3FA"/>
 <rect x="2" y="2" width="32" height="32" rx="16" stroke="#F0F3FA" stroke-width="4"/>
 <g clip-path="url(#clip0_888_16074)">
-<path d="M11.3333 21.333L17.9999 24.6663L24.6666 21.333M11.3333 17.9997L17.9999 21.333L24.6666 17.9997M17.9999 11.333L11.3333 14.6663L17.9999 17.9997L24.6666 14.6663L17.9999 11.333Z" stroke="#053688" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11.3333 21.333L17.9999 24.6663L24.6666 21.333M11.3333 17.9997L17.9999 21.333L24.6666 17.9997M17.9999 11.333L11.3333 14.6663L17.9999 17.9997L24.6666 14.6663L17.9999 11.333Z" stroke="#233E23" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
 <clipPath id="clip0_888_16074">

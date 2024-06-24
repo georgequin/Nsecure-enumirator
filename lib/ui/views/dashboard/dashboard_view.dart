@@ -1,26 +1,18 @@
-import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
-import 'package:kenmack/state.dart';
-import 'package:kenmack/ui/views/dashboard/recommendedCard.dart';
-import 'package:kenmack/ui/views/dashboard/verificationrequirement.dart';
-import 'package:kenmack/ui/views/dashboard/verifydriver.dart';
+import 'package:nsecure/state.dart';
+import 'package:nsecure/ui/views/dashboard/verificationrequirement.dart';
+import 'package:nsecure/ui/views/dashboard/verifydriver.dart';
 import 'package:openapi/api.dart';
 import 'package:stacked/stacked.dart';
-import '../../../utils/base64Image.dart';
 import '../../common/app_colors.dart';
 import '../../common/ui_helpers.dart';
-import '../../components/empty_state.dart';
-import '../../components/submit_button.dart';
 import '../account/profile.dart';
 import 'dashboard_viewmodel.dart';
-import 'dismissable_card.dart';
 import 'registedWorkers.dart';
 
 class DashboardView extends StackedView<DashboardViewModel> {
@@ -45,48 +37,52 @@ class DashboardView extends StackedView<DashboardViewModel> {
   ) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
+        preferredSize: Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: kcPrimaryColor,
           flexibleSpace: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              verticalSpaceMedium,
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 2.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ProfilePage(),
-                        ));
-                      },
-                      child: profile.value.picture != null
-                          ? CircleAvatar(
-                              radius: 29,
-                              backgroundColor: Colors.white,
-                              backgroundImage: MemoryImage(
-                                  base64Decode(profile.value.picture!.url!)),
-                            )
-                          : const Icon(
-                              Icons.person_2_rounded,
-                              color: Colors.white, // Icon content color
-                              size: 44,
-                            ),
-                    ),
-                    Text(
-                      'Home',
-                      style: TextStyle(
-                          fontSize: 34,
-                          color: Colors.white,
-                          fontWeight: FontWeight
-                              .bold), // Increase the font size of the title
-                    ),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProfilePage(),
+                          ));
+                        },
+                        child: profile.value.picture != null
+                            ? CircleAvatar(
+                                radius: 22,
+                                backgroundColor: Colors.white,
+                                backgroundImage: MemoryImage(
+                                    base64Decode(profile.value.picture!.url!)),
+                              )
+                            : const CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: Icon(
+                                  Icons.person_2_rounded,
+                                  color: Colors.black54, // Icon content color
+                                  size: 22,
+                                ),
+                              )),
+                    // Text(
+                    //   'Home',
+                    //   style: TextStyle(
+                    //       fontSize: 24,
+                    //       color: Colors.white,
+                    //       fontWeight: FontWeight
+                    //           .bold), // Increase the font size of the title
+                    // ),
                     IconButton(
                       icon: Icon(
                         Icons.notifications_active_outlined,
-                        size: 44,
+                        size: 32,
                         color: Colors.white,
                       ),
                       onPressed: () {},
@@ -98,217 +94,304 @@ class DashboardView extends StackedView<DashboardViewModel> {
           ),
         ),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          verticalSpaceSmall,
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Card(
-              color: Colors.white,
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: SizedBox(
-                width: 500,
-                height: 187,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text(
-                        'Registered Transport Workers',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        // Ensure to pass a valid ServicesPOJO object
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ServiceDetailsPage(
-                              service: ServicesPOJO(
-                                title: 'Service Title',
-                                description: 'Service Description',
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                      child: Card(
-                        color: Colors.white,
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: SizedBox(
-                          width: 100,
-                          height: 50,
-                          child: Center(
-                            child: Text(
-                              '1447',
-                              style: TextStyle(
-                                  fontSize: 29, fontWeight: FontWeight.w800),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextButton.icon(
-                          icon: Icon(
-                            Icons.add,
-                            size: 24,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => VerificationRequirement(),
-                              ),
-                            );
-                          },
-                          label: Text(
-                            'Add New',
-                            style: TextStyle(color: kcPrimaryColor),
-                          ),
-                        ),
-                        TextButton.icon(
-                          icon: Icon(
-                            Icons.document_scanner_outlined,
-                            size: 24,
-                          ),
-                          onPressed: () {},
-                          label: Text(
-                            'Scan a Driver',
-                            style: TextStyle(color: kcPrimaryColor),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+          Align(
+            alignment: Alignment.center,
+            child: Opacity(
+              opacity: 0.5, // Adjust opacity to make the logo less obtrusive
+              child: Image.asset(
+                "assets/images/logo-tint.png", // Your logo asset path
+                width: 500, // Adjust size accordingly
               ),
             ),
           ),
-          verticalSpaceSmall,
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Card(
-              color: Colors.white,
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: SizedBox(
-                width: 500,
-                height: 150,
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Total Tax Collected',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+          ListView(
+            children: [
+              Column(
+                children: [
+                  verticalSpaceSmall,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Card(
+                      elevation: 4,
+                      color: Colors.white.withOpacity(0.9),
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              'Registered Transport Workers',
+                              style: GoogleFonts.rubik(
+                                textStyle: TextStyle(
+                                    color: Color(0xFF565656),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Text('1447',
+                                style: GoogleFonts.rubik(
+                                  textStyle: TextStyle(
+                                      fontSize: 29,
+                                      color: kcPrimaryColor,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                            verticalSpaceSmall,
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ServiceDetailsPage(
+                                      service: ServicesPOJO(
+                                        title: 'Service Title',
+                                        description: 'Service Description',
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text('View Workers >',
+                                  style: GoogleFonts.rubik(
+                                    textStyle: TextStyle(
+                                        fontSize: 15,
+                                        color: kcPrimaryColor,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                            ),
+                            Divider(
+                              color: kcPrimaryColor,
+                              thickness: 2.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => VerifyDriver(),
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xFFF0F3FA),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          4), // Reduced border radius
+                                    ),
+                                  ),
+                                  child: Text(
+                                    '+ Add New',
+                                    style: GoogleFonts.rubik(
+                                      textStyle: TextStyle(
+                                        fontSize: 15,
+                                        color:
+                                            kcPrimaryColor, // Make sure kcPrimaryColor is defined
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // Add new worker
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xFFF0F3FA),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          4), // Reduced border radius
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text(
+                                        'Scan a Driver',
+                                        style: GoogleFonts.rubik(
+                                          textStyle: TextStyle(
+                                            fontSize: 15,
+                                            color:
+                                                kcPrimaryColor, // Make sure kcPrimaryColor is defined
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      horizontalSpaceTiny,
+                                      Icon(
+                                        Icons.document_scanner_outlined,
+                                        color: kcPrimaryColor,
+                                        size: 18,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      verticalSpaceSmall,
-                      Text(
-                        '₦ 15,000.00',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                            color: kcPrimaryColor),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'View Details',
-                              style: TextStyle(color: kcPrimaryColor),
-                            ),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.navigate_next_outlined,
-                                color: kcPrimaryColor),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ),
-          ),
-          verticalSpaceSmall,
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Card(
-              color: Colors.white,
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: SizedBox(
-                width: 500,
-                height: 150,
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Cash Collected',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Card(
+                      elevation: 4,
+                      color: Colors.white.withOpacity(0.9),
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Total Tax Collected',
+                              style: GoogleFonts.rubik(
+                                textStyle: TextStyle(
+                                    color: Color(0xFF565656),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            verticalSpaceSmall,
+                            Text(
+                              '₦ 15,000.00',
+                              style: GoogleFonts.rubik(
+                                textStyle: TextStyle(
+                                    color: kcPrimaryColor,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800),
+                              ),
+                            ),
+                            verticalSpaceSmall,
+                            InkWell(
+                              onTap: () {},
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'View Details',
+                                    style: TextStyle(color: kcPrimaryColor),
+                                  ),
+                                  Icon(Icons.navigate_next_outlined,
+                                      color: kcPrimaryColor),
+                                ],
+                              ),
+                            )
+                          ],
                         ),
                       ),
-                      verticalSpaceSmall,
-                      Text(
-                        '₦ 10,000.00',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                            color: kcPrimaryColor),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'View Details',
-                              style: TextStyle(color: kcPrimaryColor),
-                            ),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.navigate_next_outlined,
-                                color: kcPrimaryColor),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Card(
+                      elevation: 4,
+                      color: Colors.white.withOpacity(0.9),
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Cash Collected',
+                              style: GoogleFonts.rubik(
+                                textStyle: TextStyle(
+                                    color: Color(0xFF565656),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            verticalSpaceSmall,
+                            Text(
+                              '₦ 10,000.00',
+                              style: GoogleFonts.rubik(
+                                textStyle: TextStyle(
+                                    color: kcPrimaryColor,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800),
+                              ),
+                            ),
+                            verticalSpaceSmall,
+                            InkWell(
+                              onTap: () {},
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'View Details',
+                                    style: TextStyle(color: kcPrimaryColor),
+                                  ),
+                                  Icon(Icons.navigate_next_outlined,
+                                      color: kcPrimaryColor),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Card(
+                      elevation: 4,
+                      color: Colors.white.withOpacity(0.9),
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Wallet Balance',
+                              style: GoogleFonts.rubik(
+                                textStyle: TextStyle(
+                                    color: Color(0xFF565656),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            verticalSpaceSmall,
+                            Text(
+                              '₦ 10,000.00',
+                              style: GoogleFonts.rubik(
+                                textStyle: TextStyle(
+                                    color: kcPrimaryColor,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800),
+                              ),
+                            ),
+                            verticalSpaceSmall,
+                            InkWell(
+                              onTap: () {},
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Withdraw',
+                                    style: TextStyle(color: kcPrimaryColor),
+                                  ),
+                                  Icon(Icons.navigate_next_outlined,
+                                      color: kcPrimaryColor),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
           ),
         ],
       ),
@@ -320,4 +403,11 @@ class DashboardView extends StackedView<DashboardViewModel> {
     BuildContext context,
   ) =>
       DashboardViewModel();
+
+
+  @override
+  void onViewModelReady(DashboardViewModel viewModel) {
+    viewModel.init();
+    super.onViewModelReady(viewModel);
+  }
 }

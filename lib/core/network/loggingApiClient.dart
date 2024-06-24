@@ -4,8 +4,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:kenmack/app/app.router.dart';
-import 'package:kenmack/core/utils/config.dart';
+import 'package:nsecure/app/app.router.dart';
+import 'package:nsecure/core/utils/config.dart';
 import 'package:logger/logger.dart';
 import 'package:openapi/api.dart';
 // import 'package:http/src/response.dart';

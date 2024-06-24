@@ -1,5 +1,5 @@
 // Openapi Generator last run: : 2024-01-31T19:27:14.004346
-import 'package:kenmack/core/utils/config.dart';
+import 'package:nsecure/core/utils/config.dart';
 import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';
 
 @Openapi(

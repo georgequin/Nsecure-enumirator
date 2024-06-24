@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kenmack/state.dart';
-import 'package:kenmack/ui/common/app_colors.dart';
-import 'package:kenmack/ui/common/ui_helpers.dart';
-import 'package:kenmack/ui/views/account/profile.dart';
-import 'package:kenmack/ui/views/account/support.dart';
+import 'package:nsecure/state.dart';
+import 'package:nsecure/ui/common/app_colors.dart';
+import 'package:nsecure/ui/common/ui_helpers.dart';
+import 'package:nsecure/ui/views/account/profile.dart';
+import 'package:nsecure/ui/views/account/support.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';

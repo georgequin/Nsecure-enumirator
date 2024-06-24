@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:kenmack/ui/common/app_colors.dart';
+import 'package:nsecure/ui/common/app_colors.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:url_launcher/url_launcher.dart';

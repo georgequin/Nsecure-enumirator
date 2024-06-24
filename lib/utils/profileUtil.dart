@@ -1,5 +1,5 @@
-import 'package:kenmack/core/network/loggingApiClient.dart';
-import 'package:kenmack/state.dart';
+import 'package:nsecure/core/network/loggingApiClient.dart';
+import 'package:nsecure/state.dart';
 import 'package:openapi/api.dart';
 import '../app/app.locator.dart';
 import '../core/network/api_manager.dart';

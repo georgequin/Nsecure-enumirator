@@ -1,9 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:kenmack/app/app.router.dart';
-import 'package:kenmack/ui/common/app_colors.dart';
-import 'package:kenmack/ui/common/ui_helpers.dart';
+import 'package:nsecure/app/app.router.dart';
+import 'package:nsecure/ui/common/app_colors.dart';
+import 'package:nsecure/ui/common/ui_helpers.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 

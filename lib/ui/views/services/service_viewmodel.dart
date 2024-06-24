@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:kenmack/core/network/loggingApiClient.dart';
+import 'package:nsecure/core/network/loggingApiClient.dart';
 import 'package:stacked/stacked.dart';
 import 'package:openapi/api.dart';
 

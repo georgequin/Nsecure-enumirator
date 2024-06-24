@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:kenmack/app/app.router.dart';
+import 'package:nsecure/app/app.router.dart';
 import 'package:openapi/api.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
