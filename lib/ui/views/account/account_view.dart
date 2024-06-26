@@ -16,12 +16,25 @@ class AccountView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Account'),
-
+        backgroundColor: kcPrimaryColor,
+        title: Center(
+          child: Text(
+            'Report',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: Column(
         children: [
           Container(
+
             margin: EdgeInsets.all(20),
             width: double.infinity,
             padding: EdgeInsets.all(16),

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -33,9 +32,12 @@ class _ProfilePageState extends State<ProfilePage> {
   final ApiManager _apiManager = ApiManager(locator<LoggingApiClient>());
 
   // Use initial values from the profile state
-  late TextEditingController _fullNameController = TextEditingController(text: '${profile.value.firstName} ${profile.value.lastName}');
-  late TextEditingController _phoneNumberController = TextEditingController(text: '${profile.value.phone}');
-  late TextEditingController _emailController = TextEditingController(text: '${profile.value.email}');
+  late TextEditingController _fullNameController = TextEditingController(
+      text: '${profile.value.firstName} ${profile.value.lastName}');
+  late TextEditingController _phoneNumberController =
+      TextEditingController(text: '${profile.value.phone}');
+  late TextEditingController _emailController =
+      TextEditingController(text: '${profile.value.email}');
 
   @override
   void initState() {
@@ -46,24 +48,24 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void initializeControllers() {
-    _fullNameController = TextEditingController(text: '${profile.value.firstName} ${profile.value.lastName}');
-    _phoneNumberController = TextEditingController(text: '${profile.value.phone}');
+    _fullNameController = TextEditingController(
+        text: '${profile.value.firstName} ${profile.value.lastName}');
+    _phoneNumberController =
+        TextEditingController(text: '${profile.value.phone}');
     _emailController = TextEditingController(text: '${profile.value.email}');
   }
 
-
   void fetchCountries() async {
     try {
-
       _countries = await _apiManager.performApiCall(
-          apiCall: () => UserControllerApi(_apiManager.apiClient).getAllCountries(),
-          endpoint: 'countries'
-      );
+          apiCall: () =>
+              UserControllerApi(_apiManager.apiClient).getAllCountries(),
+          endpoint: 'countries');
 
       if (_countries.isNotEmpty) {
-        if(profile.value.countryPOJO != null){
+        if (profile.value.countryPOJO != null) {
           _selectedCountryId = profile.value.countryPOJO?.id;
-        }else{
+        } else {
           _selectedCountryId = _countries.first.id;
         }
       }
@@ -92,7 +94,8 @@ class _ProfilePageState extends State<ProfilePage> {
     // Assuming you have a method in your UserControllerApi for updating the profile picture
     try {
       await _apiManager.performApiCall(
-        apiCall: () => UserControllerApi(_apiManager.apiClient).updateUserProfilePicture(
+        apiCall: () =>
+            UserControllerApi(_apiManager.apiClient).updateUserProfilePicture(
           profile.value.id!,
           base64Image,
         ),
@@ -103,7 +106,6 @@ class _ProfilePageState extends State<ProfilePage> {
       print("Error updating profile picture: $e");
     }
   }
-
 
   Future<void> _updateProfileDetails() async {
     // Implement your logic to update the profile details
@@ -116,108 +118,165 @@ class _ProfilePageState extends State<ProfilePage> {
 
     try {
       Response response = await _apiManager.performApiCall(
-        apiCall: () => UserControllerApi(_apiManager.apiClient).updateUserDetails(profile.value.id!, userDetailDTO),
+        apiCall: () => UserControllerApi(_apiManager.apiClient)
+            .updateUserDetails(profile.value.id!, userDetailDTO),
         endpoint: 'user details',
       );
       ProfileUtil().getProfile();
     } catch (e) {
       print("Error fetching user profile: $e");
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text('Profile Details'),
+        backgroundColor: kcPrimaryColor,
+        title: Center(
+          child: Text(
+            'Driver Profile',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: SingleChildScrollView(
-        child:  Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: 24),
             Stack(
-              alignment: Alignment.center, // Align children at the bottom center
+              alignment:
+                  Alignment.center, // Align children at the bottom center
               children: [
                 GestureDetector(
                   onTap: _updateProfileImage,
                   child: CircleAvatar(
                     radius: 100,
                     backgroundColor: Colors.grey.shade200,
-                    backgroundImage: _imageBytes != null ? MemoryImage(_imageBytes!) : (profile.value.picture?.url != null ? MemoryImage(base64Decode(profile.value.picture!.url!)) : null),
+                    backgroundImage: _imageBytes != null
+                        ? MemoryImage(_imageBytes!)
+                        : (profile.value.picture?.url != null
+                            ? MemoryImage(
+                                base64Decode(profile.value.picture!.url!))
+                            : null),
                   ),
                 ),
                 verticalSpaceSmall,
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.5), // Semi-transparent black
-                    borderRadius: BorderRadius.circular(100), // Circular border to match the avatar
+                    color:
+                        Colors.black.withOpacity(0.5), // Semi-transparent black
+                    borderRadius: BorderRadius.circular(
+                        100), // Circular border to match the avatar
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  child:
-                  GestureDetector(
-                    onTap: _updateProfileImage,
-                    child: const Column(
-                      children: [
-                        Text(
-                          'Update',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                  child: GestureDetector(
+                      onTap: _updateProfileImage,
+                      child: const Column(
+                        children: [
+                          Text(
+                            'Update',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-
-                      ],
-                    )
-
-                  ),
+                        ],
+                      )),
                 ),
-
               ],
             ),
-
+            verticalSpaceSmall,
+            Text(
+              'Amrah Dee',
+              style: TextStyle(
+                  color: kcPrimaryColor,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600),
+            ),
             SizedBox(height: 16),
-            Text('${profile.value.firstName} ${profile.value.lastName}' ?? 'user',
-                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-            Text('${profile.value.email}',  style: TextStyle(fontSize: 16)),
-            Text('${profile.value.phone}',  style: TextStyle(fontSize: 16)),
-            Text('${profile.value.countryPOJO?.name ?? ''}',  style: TextStyle(fontSize: 16)),
-            verticalSpaceTiny,
-            // IconButton(
-            //   icon: Icon(Icons.edit_note_rounded),
-            //   onPressed: () => _showEditDialog(),
-            // ),
-            ElevatedButton(
-              onPressed: () => _showEditDialog(),
-              child: Text('Edit'),
-              style: ElevatedButton.styleFrom(
-                shape: StadiumBorder(),
-                backgroundColor: kcPrimaryColor,
-                padding: EdgeInsets.symmetric(vertical: 16),
-                minimumSize: Size(200, 50),
-
+            Container(
+              width: 365,
+              height: 179,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(12),
               ),
             ),
-            ListTile(
-              title: Text('', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            SizedBox(height: 16),
+            SizedBox(
+              height: 200,
+              child: Expanded(
+                child: Card(
+                  color: Colors.white,
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    children: ListTile.divideTiles(
+                      context: context,
+                      tiles: [
+                        ListTile(
+                          leading: Text(
+                            'Outstanding Tax',
+                            style: TextStyle(),
+                          ),
+                          title: Text(
+                            '#1,447',
+                            style: TextStyle(),
+                          ),
+                          trailing:
+                              Icon(Icons.chevron_right, color: kcPrimaryColor),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          leading: Text('Applicable Tax'),
+                          title: Text('Bus driver '),
+                          trailing: Text(
+                            '#4500/month',
+                            style: TextStyle(),
+                          ),
+                          onTap: () {
+                            // Handle security navigation or action
+                          },
+                        ),
+                        ListTile(
+                          title: Text('Serial ID'),
+                          trailing: Text(
+                            '8973602TY',
+                            style: TextStyle(),
+                          ),
+                          onTap: () {
+                            // Handle security navigation or action
+                          },
+                        ),
+                      ],
+                    ).toList(),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
-        )
-      ),
+      )),
     );
   }
 
-
-  Widget _buildTextField(TextEditingController controller, String label,  {String? trailing, bool enabled = true}) {
+  Widget _buildTextField(TextEditingController controller, String label,
+      {String? trailing, bool enabled = true}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: TextField(
@@ -232,25 +291,22 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildCountryDropdown() {
-    return
-      Padding(
+    return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-    child:DropdownButtonFormField<int>(
-      value: _selectedCountryId,
-      onChanged: (newValue) {
-        setState(() {
-          _selectedCountryId = newValue;
-        });
-      },
-      items: _countries.map<DropdownMenuItem<int>>((CountryPOJO country) {
-        return DropdownMenuItem<int>(
-          value: country.id,
-          child: Text(country.name ?? ''),
-        );
-      }).toList(),
-    )
-      );
-
+        child: DropdownButtonFormField<int>(
+          value: _selectedCountryId,
+          onChanged: (newValue) {
+            setState(() {
+              _selectedCountryId = newValue;
+            });
+          },
+          items: _countries.map<DropdownMenuItem<int>>((CountryPOJO country) {
+            return DropdownMenuItem<int>(
+              value: country.id,
+              child: Text(country.name ?? ''),
+            );
+          }).toList(),
+        ));
   }
 
   void _showEditDialog() {
@@ -263,7 +319,8 @@ class _ProfilePageState extends State<ProfilePage> {
           content: Column(
             children: [
               _buildTextField(_fullNameController, 'Full Name'),
-              _buildTextField(_phoneNumberController, 'Phone Number',  trailing: 'Not Verified'),
+              _buildTextField(_phoneNumberController, 'Phone Number',
+                  trailing: 'Not Verified'),
               _buildCountryDropdown(),
             ],
           ),
@@ -286,6 +343,4 @@ class _ProfilePageState extends State<ProfilePage> {
       },
     );
   }
-
-
 }
