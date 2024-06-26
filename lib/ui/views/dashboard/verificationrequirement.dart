@@ -87,68 +87,68 @@ class VerificationRequirement extends StatelessWidget {
                   ),
                   SizedBox(height: 16),
 
-                  Container(
-                    padding: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/images/smile.svg', // Replace with your SVG asset path
-                          width: 40,
-                          height: 40,
-                        ),
-                        SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Face Verification',
-                              style: TextStyle(fontSize: 16, color: kcPrimaryColor),
-                            ),
-                            Text(
-                              'Get a face shot by following the \n instructions that will be provided.',
-                              style: TextStyle(fontSize: 14, color: Color(0xFF565656)),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 16),
-
-                  Container(
-                    padding: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/images/smile.svg', // Replace with your SVG asset path
-                          width: 40,
-                          height: 40,
-                        ),
-                        SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'ID Card Verification',
-                              style: TextStyle(fontSize: 16, color: kcPrimaryColor),
-                            ),
-                            Text(
-                              'Provide us with a passport  \n photograph and Valid ID card.',
-                              style: TextStyle(fontSize: 14, color: Color(0xFF565656)),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   padding: EdgeInsets.all(8.0),
+                  //   decoration: BoxDecoration(
+                  //     border: Border.all(color: Colors.grey, width: 1),
+                  //     borderRadius: BorderRadius.circular(10),
+                  //   ),
+                  //   child: Row(
+                  //     children: [
+                  //       SvgPicture.asset(
+                  //         'assets/images/smile.svg', // Replace with your SVG asset path
+                  //         width: 40,
+                  //         height: 40,
+                  //       ),
+                  //       SizedBox(width: 16),
+                  //       Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           Text(
+                  //             'Face Verification',
+                  //             style: TextStyle(fontSize: 16, color: kcPrimaryColor),
+                  //           ),
+                  //           Text(
+                  //             'Get a face shot by following the \n instructions that will be provided.',
+                  //             style: TextStyle(fontSize: 14, color: Color(0xFF565656)),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // SizedBox(height: 16),
+                  //
+                  // Container(
+                  //   padding: EdgeInsets.all(8.0),
+                  //   decoration: BoxDecoration(
+                  //     border: Border.all(color: Colors.grey, width: 1),
+                  //     borderRadius: BorderRadius.circular(10),
+                  //   ),
+                  //   child: Row(
+                  //     children: [
+                  //       SvgPicture.asset(
+                  //         'assets/images/smile.svg', // Replace with your SVG asset path
+                  //         width: 40,
+                  //         height: 40,
+                  //       ),
+                  //       SizedBox(width: 16),
+                  //       Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           Text(
+                  //             'ID Card Verification',
+                  //             style: TextStyle(fontSize: 16, color: kcPrimaryColor),
+                  //           ),
+                  //           Text(
+                  //             'Provide us with a passport  \n photograph and Valid ID card.',
+                  //             style: TextStyle(fontSize: 14, color: Color(0xFF565656)),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),

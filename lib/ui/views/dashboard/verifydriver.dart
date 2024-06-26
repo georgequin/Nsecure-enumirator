@@ -49,29 +49,29 @@ class VerifyDriver extends StackedView<DashboardViewModel>  {
             style: TextStyle(fontSize: 16, color: kcPrimaryColor),
 
           ),
-          TextFieldWidget(§
-            hint: "Serial key",
-            controller: model.email,
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'required';
-              }
-              if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-                  .hasMatch(value)) {
-                return 'Invalid Serial key address';
-              }
-              return null; // Return null to indicate no validation error
-            },
-          ),
-          verticalSpace(60),
-          SubmitButton(
-            isLoading: Model.isBusy,
-            label: "Sign in",
-            submit: () {
-            },
-            color: kcPrimaryColor,
-            boldText: true,
-          ),
+          // TextFieldWidget(
+          //   hint: "Serial key",
+          //   controller: model.email,
+          //   validator: (value) {
+          //     if (value.isEmpty) {
+          //       return 'required';
+          //     }
+          //     if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
+          //         .hasMatch(value)) {
+          //       return 'Invalid Serial key address';
+          //     }
+          //     return null; // Return null to indicate no validation error
+          //   },
+          // ),
+          // verticalSpace(60),
+          // SubmitButton(
+          //   isLoading: Model.isBusy,
+          //   label: "Sign in",
+          //   submit: () {
+          //   },
+          //   color: kcPrimaryColor,
+          //   boldText: true,
+          // ),
         ],
       ),
     );

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kenmack/core/network/loggingApiClient.dart';
+import 'package:location/location.dart' as locationLib;
 import 'package:openapi/api.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -16,6 +18,12 @@ import '../../../state.dart';
 
 
 class DashboardViewModel extends BaseViewModel {
+
+  CameraPosition initialPosition =
+  CameraPosition(target: LatLng(34.0469, -118.2437), zoom: 14.0);
+  GoogleMapController? mapController;
+  locationLib.LocationData? locationData;
+  BitmapDescriptor? customIcon;
 
   final ApiManager _apiManager = ApiManager(locator<LoggingApiClient>());
 

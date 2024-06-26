@@ -24,6 +24,8 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final List<String> categories = ['happy', 'sad', 'weee'];
+
 
   @override
   void initState() {
@@ -59,9 +61,10 @@ class _RegisterState extends State<Register> {
                     children: [
                       verticalSpaceMedium,
                       const Text(
-                        "Sign up to get started",
+                        "Welcome aboard!",
                         style: TextStyle(
                             fontSize: 20,
+                            color: kcPrimaryColor,
                             fontWeight: FontWeight.bold,
                             fontFamily: "Panchang"),
                       ),
@@ -86,9 +89,86 @@ class _RegisterState extends State<Register> {
                           ),
                         )
                       ]),
+                      Column(
+                        
+                        children: [
+                          TextFieldWidget(
+                            hint: "First Name",
+                            controller: model.firstname,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'required';
+                              }
+                              return null; // Return null to indicate no validation error
+                            },
+                          ),
+                          TextFieldWidget(
+                            hint: "First Name",
+                            controller: model.firstname,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'required';
+                              }
+                              return null; // Return null to indicate no validation error
+                            },
+                          ),
+                        ],
+                      ),
                       verticalSpaceMedium,
-
+                      TextFieldWidget(
+                        hint: "City",
+                        controller: model.email,
+                        validator: (value) {},
+                      ),
                       verticalSpaceMedium,
+                      DropdownButtonFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Category',
+                          labelStyle: const TextStyle(
+                              color: Colors.black, fontSize: 13),
+                          floatingLabelStyle:
+                          const TextStyle(color: Colors.black),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(color: Colors.black),
+                          ),
+                        ),
+                        value: model
+                            .selectedGender, // You should add selectedGender to your model
+                        onSaved: (String? newValue) {
+                          model.selectedGender = newValue!;
+                        },
+                        onChanged: (String? newValue) {
+                          model.selectedGender = newValue!;
+                          print('value of gender is${ model.selectedGender}');
+                        },
+                        items: categories
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        validator: (value) =>
+                        value == null ? 'Please select a gender' : null,
+                      ),
+                      verticalSpaceMedium,
+                      TextFieldWidget(
+                        hint: "Station",
+                        controller: model.email,
+                        validator: (value) {},
+                      ),
+                      verticalSpaceMedium,
+                      TextFieldWidget(
+                        hint: "Plate Number",
+                        controller: model.email,
+                        validator: (value) {},
+                      ),
+                      verticalSpaceSmall,
                       TextFieldWidget(
                         hint: "Email Address",
                         controller: model.email,
@@ -104,110 +184,35 @@ class _RegisterState extends State<Register> {
                         },
                       ),
                       verticalSpaceSmall,
-                      TextFieldWidget(
-                        inputType: TextInputType.visiblePassword,
-                        hint: "Password",
-                        controller: model.password,
-                        obscureText: model.obscure,
-                        suffix: InkWell(
-                          onTap: () {
-                            model.toggleObscure();
-                          },
-                          child: Icon(model.obscure
-                              ? Icons.visibility_off
-                              : Icons.visibility),
+                      IntlPhoneField(
+                        decoration: InputDecoration(
+                          labelText: 'Phone Number',
+                          labelStyle:
+                          const TextStyle(color: Colors.black, fontSize: 13),
+                          floatingLabelStyle: const TextStyle(color: Colors.black),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.circular(10.0), // Add border curve
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.circular(10.0), // Add border curve
+                            borderSide: const BorderSide(color: Colors.black),
+                          ),
                         ),
                         validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Password is required';
-                          }
-                          if (value.length < 8) {
-                            return 'Password must be at least 8 characters long';
-                          }
-                          if (!RegExp(r'[A-Z]').hasMatch(value)) {
-                            return 'Password must contain at least one uppercase letter';
-                          }
-                          if (!RegExp(r'[a-z]').hasMatch(value)) {
-                            return 'Password must contain at least one lowercase letter';
-                          }
-                          if (!RegExp(r'[0-9]').hasMatch(value)) {
-                            return 'Password must contain at least one digit';
-                          }
-                          if (!RegExp(r'[!@#$%^&*]').hasMatch(value)) {
-                            return 'Password must contain at least one special character';
+                          if (value!.completeNumber.isEmpty) {
+                            return 'required';
                           }
                           return null; // Return null to indicate no validation error
                         },
-                      ),
-                      verticalSpaceSmall,
-                      TextFieldWidget(
-                        hint: "Re-type password",
-                        controller: model.cPassword,
-                        obscureText: model.obscure,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Password confirmation is required';
-                          }
-                          if (value != model.password.text) {
-                            return 'Passwords do not match';
-                          }
-                          return null; // Return null to indicate no validation error
+                        initialCountryCode: 'NG',
+                        controller: model.phone,
+                        onChanged: (phone) {
+                          model.phoneNumber = phone;
                         },
-                        suffix: InkWell(
-                          onTap: () {
-                            model.toggleObscure();
-                          },
-                          child: Icon(model.obscure
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                        ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            verticalSpaceMedium,
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Expanded(
-                                  child: Divider(
-                                    color: Colors.grey,
-                                    thickness: 1,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 8),
-                                  child: Text(
-                                    "OR",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Divider(
-                                    color: Colors.grey,
-                                    thickness: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            verticalSpaceMedium,
-                            socialLoginButton('Continue with Google',
-                                'assets/images/google.png'),
-                            socialLoginButton('Continue with Facebook',
-                                'assets/images/facebook.png'),
-
-
-                            //SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-                          ],
-                        ),
-                      ),
-
-                      verticalSpace(60),
                       SubmitButton(
                         isLoading: model.isBusy,
                         label: "Sign in",
@@ -233,31 +238,4 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
-
-  void gotoLogin() {}
-
-  Widget socialLoginButton(String text, String iconPath) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: ElevatedButton.icon(
-        icon: Image.asset(iconPath, height: 14, width: 14),
-        label: Text(text,
-            style: const TextStyle(
-                fontSize: 14,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w400)),
-        onPressed: () {
-          // Handle social login
-        },
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
-          minimumSize: const Size(double.infinity, 50),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-        ),
-      ),
-    );
   }
-}

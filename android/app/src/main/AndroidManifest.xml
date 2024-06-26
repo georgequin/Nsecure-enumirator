@@ -8,7 +8,7 @@
     </queries>
 
     <application
-        android:label="Kenma UK"
+        android:label="Nsecure driver"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"

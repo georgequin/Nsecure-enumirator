@@ -42,7 +42,7 @@ class _LoginPageState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   verticalSpaceMassive,
-                  Image.asset('assets/images/logo.png', height:92, width: 92, ),
+                  Image.asset('assets/images/n secure logo.png', height:92, width: 92, ),
                   // verticalSpaceSmall,
                   const Text(
                     'Welcome Back! 👋',

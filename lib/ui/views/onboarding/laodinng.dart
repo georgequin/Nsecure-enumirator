@@ -18,7 +18,7 @@ class OnboardingView extends StatelessWidget {
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.all(50.0),
-                      child: Image.asset('assets/images/onboarding-.png'),
+                      child: Image.asset('assets/images/n secure logo.png'),
                     ),
                   ),
                 ),

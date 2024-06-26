@@ -59,6 +59,9 @@ dependencies:
   open_mail_app: ^0.4.5
   flutter_email_sender: ^5.0.2
   flutter_svg: ^1.0.3
+  google_maps_flutter: ^2.6.1
+  location: ^5.0.0
+
 
 
 
@@ -88,7 +91,7 @@ flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/images/logo.png"
+  image_path: "assets/images/n secure logo.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
 
 

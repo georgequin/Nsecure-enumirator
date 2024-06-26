@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "org.dataknead.kenmack"
+    namespace "org.dataknead.nsecure.driver"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 

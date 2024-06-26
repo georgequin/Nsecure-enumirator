@@ -39,12 +39,12 @@ class HomeView extends StackedView<HomeViewModel> {
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                icon: _navBarItemIcon(Icons.report, "Services", viewModel.selectedTab == 1, iconColor),
-                label: "Report",
+                icon: _navBarItemIcon(Icons.qr_code_2_outlined, "Services", viewModel.selectedTab == 1, iconColor),
+                label: "QR Code",
               ),
               BottomNavigationBarItem(
                 icon: _navBarItemIcon(Icons.file_copy_sharp, "Notification", viewModel.selectedTab == 2, iconColor),
-                label: "Tax collection",
+                label: "Tax History ",
               ),
 
               BottomNavigationBarItem(

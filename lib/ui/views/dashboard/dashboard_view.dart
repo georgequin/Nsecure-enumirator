@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:kenmack/state.dart';
 import 'package:kenmack/ui/views/dashboard/recommendedCard.dart';
@@ -19,6 +20,7 @@ import '../../common/ui_helpers.dart';
 import '../../components/empty_state.dart';
 import '../../components/submit_button.dart';
 import '../account/profile.dart';
+import '../notification/notification_view.dart';
 import 'dashboard_viewmodel.dart';
 import 'dismissable_card.dart';
 import 'registedWorkers.dart';
@@ -44,62 +46,68 @@ class DashboardView extends StackedView<DashboardViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
-        child: AppBar(
-          backgroundColor: kcPrimaryColor,
-          flexibleSpace: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ProfilePage(),
-                        ));
-                      },
-                      child: profile.value.picture != null
-                          ? CircleAvatar(
-                              radius: 29,
-                              backgroundColor: Colors.white,
-                              backgroundImage: MemoryImage(
-                                  base64Decode(profile.value.picture!.url!)),
-                            )
-                          : const Icon(
-                              Icons.person_2_rounded,
-                              color: Colors.white, // Icon content color
-                              size: 44,
-                            ),
-                    ),
-                    Text(
-                      'Home',
-                      style: TextStyle(
-                          fontSize: 34,
-                          color: Colors.white,
-                          fontWeight: FontWeight
-                              .bold), // Increase the font size of the title
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.notifications_active_outlined,
-                        size: 44,
-                        color: Colors.white,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70.0),
+          child: AppBar(
+            backgroundColor: kcPrimaryColor,
+            flexibleSpace: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                verticalSpaceMedium,
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProfilePage(),
+                          ));
+                        },
+                        child: profile.value.picture != null
+                            ? CircleAvatar(
+                                radius: 29,
+                                backgroundColor: Colors.white,
+                                backgroundImage: MemoryImage(
+                                    base64Decode(profile.value.picture!.url!)),
+                              )
+                            : const Icon(
+                                Icons.person_2_rounded,
+                                color: Colors.white, // Icon content color
+                                size: 44,
+                              ),
                       ),
-                      onPressed: () {},
-                    ),
-                  ],
+                      Text(
+                        'Home',
+                        style: TextStyle(
+                            fontSize: 34,
+                            color: Colors.white,
+                        ), // Increase the font size of the title
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.notifications_active_outlined,
+                          size: 35,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => NotificationView(),
+                          ));
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-      body: Column(
-        children: [
+        body: SingleChildScrollView(
+            child: Column(children: [
           verticalSpaceSmall,
           Padding(
             padding: EdgeInsets.all(16.0),
@@ -111,123 +119,92 @@ class DashboardView extends StackedView<DashboardViewModel> {
               ),
               child: SizedBox(
                 width: 500,
-                height: 187,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text(
-                        'Registered Transport Workers',
+                height: 127,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Welcome Marvelous',
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: kcPrimaryColor),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        // Ensure to pass a valid ServicesPOJO object
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ServiceDetailsPage(
-                              service: ServicesPOJO(
-                                title: 'Service Title',
-                                description: 'Service Description',
-                              ),
-                            ),
+                      verticalSpaceSmall,
+                      Text(
+                        'Please find an Enumerator closest to you  to complete \n your registration using your serial key',
+                        style:
+                            TextStyle(fontSize: 12, color: Color(0XFF565656)),
+                      ),
+                      verticalSpaceSmall,
+                      Row(
+                        children: [
+                          Text(
+                            'Serial Key:',
+                            style: TextStyle(color: kcPrimaryColor),
                           ),
-                        );
-                      },
-                      child: Card(
-                        color: Colors.white,
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: SizedBox(
-                          width: 100,
-                          height: 50,
-                          child: Center(
+                          Text(
+                            '14532334128712GA',
+                            style: TextStyle(color: kcMediumGrey),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Card(
+              color: Colors.white,
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: SizedBox(
+                width: 500,
+                height: 144,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              '1447',
+                              'Outstanding Balance',
                               style: TextStyle(
-                                  fontSize: 29, fontWeight: FontWeight.w800),
+                                  fontSize: 18, fontWeight: FontWeight.w600),
                             ),
                           ),
-                        ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'View Details',
+                              style: TextStyle(color: kcPrimaryColor),
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextButton.icon(
-                          icon: Icon(
-                            Icons.add,
-                            size: 24,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => VerificationRequirement(),
-                              ),
-                            );
-                          },
-                          label: Text(
-                            'Add New',
-                            style: TextStyle(color: kcPrimaryColor),
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          '₦ 5,000.00',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                              color: kcPrimaryColor),
                         ),
-                        TextButton.icon(
-                          icon: Icon(
-                            Icons.document_scanner_outlined,
-                            size: 24,
-                          ),
-                          onPressed: () {},
-                          label: Text(
-                            'Scan a Driver',
-                            style: TextStyle(color: kcPrimaryColor),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          verticalSpaceSmall,
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Card(
-              color: Colors.white,
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: SizedBox(
-                width: 500,
-                height: 150,
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Total Tax Collected',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        '₦ 15,000.00',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                            color: kcPrimaryColor),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -236,7 +213,7 @@ class DashboardView extends StackedView<DashboardViewModel> {
                           TextButton(
                             onPressed: () {},
                             child: Text(
-                              'View Details',
+                              'Pay now',
                               style: TextStyle(color: kcPrimaryColor),
                             ),
                           ),
@@ -253,7 +230,6 @@ class DashboardView extends StackedView<DashboardViewModel> {
               ),
             ),
           ),
-          verticalSpaceSmall,
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Card(
@@ -264,27 +240,43 @@ class DashboardView extends StackedView<DashboardViewModel> {
               ),
               child: SizedBox(
                 width: 500,
-                height: 150,
+                height: 144,
                 child: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Cash Collected',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Applicable Taxes',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'View Details',
+                              style: TextStyle(color: kcPrimaryColor),
+                            ),
+                          )
+                        ],
                       ),
-                      verticalSpaceSmall,
-                      Text(
-                        '₦ 10,000.00',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                            color: kcPrimaryColor),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          '₦ 15,000.00',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                              color: kcPrimaryColor),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -293,7 +285,7 @@ class DashboardView extends StackedView<DashboardViewModel> {
                           TextButton(
                             onPressed: () {},
                             child: Text(
-                              'View Details',
+                              'Pay now',
                               style: TextStyle(color: kcPrimaryColor),
                             ),
                           ),
@@ -310,9 +302,47 @@ class DashboardView extends StackedView<DashboardViewModel> {
               ),
             ),
           ),
-        ],
-      ),
-    );
+          // Padding(
+          //   padding: const EdgeInsets.all(16.0),
+          //   child: Card(
+          //     color: Colors.white,
+          //     elevation: 5,
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(10),
+          //     ),
+          //     child: SizedBox(
+          //       width: 500,
+          //       height: 144,
+          //       child: Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: SizedBox(
+          //           height: 125,
+          //           child: GoogleMap(
+          //             mapType: MapType.normal,
+          //             initialCameraPosition: viewModel.initialPosition,
+          //             markers: viewModel.locationData != null
+          //                 ? {
+          //               Marker(
+          //                 markerId: const MarkerId("source"),
+          //                 position: LatLng(
+          //                     viewModel.locationData!.latitude ?? 34.0469,
+          //                     viewModel.locationData!.longitude ?? -118.2437),
+          //                 icon: viewModel.customIcon ??
+          //                     BitmapDescriptor.defaultMarker,
+          //                 rotation: viewModel.locationData!.heading ?? 0,
+          //               ),
+          //             }
+          //                 : {},
+          //             onMapCreated: (GoogleMapController controller) {
+          //               viewModel.mapController = controller;
+          //             },
+          //           ),
+          //         ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+        ],),),);
   }
 
   @override
