@@ -10,6 +10,7 @@ import '../../common/ui_helpers.dart';
 import '../../components/submit_button.dart';
 import 'dashboard_viewmodel.dart';
 import 'face_capture.dart';
+import 'face_detector_view.dart';
 import 'main.dart';
 
 class PersonalInformationView extends StackedView<DashboardViewModel> {
@@ -175,7 +176,7 @@ class PersonalInformationView extends StackedView<DashboardViewModel> {
                   context,
                   MaterialPageRoute(
                     // builder: (context) => FaceRecognitionView(personList: personList,),
-                    builder: (context) => MyHomePage( title: 'main test',),
+                    builder: (context) => FaceCaptureView(),
                   ),
                 );
               },

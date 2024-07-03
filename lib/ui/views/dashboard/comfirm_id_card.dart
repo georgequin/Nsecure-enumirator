@@ -1,24 +1,102 @@
+import 'dart:typed_data';
+import 'dart:io';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../utils/image_cropper.dart';
 import '../../common/app_colors.dart';
 import '../../common/ui_helpers.dart';
 import '../../components/submit_button.dart';
+import 'asign_qr_code.dart';
+import 'comfirm_id_viewmodel.dart';
 import 'dashboard_viewmodel.dart';
 import 'face_capture.dart';
 
-class ConfirmIdCard extends StackedView<DashboardViewModel> {
+class ConfirmIdCard extends StackedView<ConfirmIdViewModel> {
   const ConfirmIdCard({Key? key}) : super(key: key);
 
   @override
-  void onViewModelReady(DashboardViewModel viewModel) {
+  void onViewModelReady(ConfirmIdViewModel viewModel) {
     viewModel.init();
     super.onViewModelReady(viewModel);
   }
 
-  Widget _buildTextField(String label, DashboardViewModel viewModel) {
+  Widget LocalFilePicker({
+    required Uint8List? fileAction,
+    required Function(Uint8List?) onFilePicked,
+  }) {
+    return InkWell(
+      onTap: () => _updateDocument(onFilePicked),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: DottedBorder(
+          color: Colors.black,
+          strokeWidth: 1,
+          padding: EdgeInsets.all(6),
+          borderType: BorderType.RRect,
+          radius: Radius.circular(22),
+          dashPattern: [5, 5],
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+            child: Container(
+              height: 175,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    fileAction != null
+                        ? Image.memory(
+                      fileAction,
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    )
+                        : Icon(
+                      Icons.cloud_upload,
+                      size: 56,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Click to upload',
+                          style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      'SVG, PNG, JPG or GIF (max. 800x400px)',
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Poppins',
+                          color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _updateDocument(void Function(Uint8List?) updateFunction) async {
+    // FilePickerResult? result = await FilePicker.platform.pickFiles();
+    // if (result != null) {
+    //   final bytes = await File(result.files.single.path ?? '').readAsBytes();
+    //
+    //   // Resize the image here
+    //   Uint8List? resizedBytes = await ImageCropper().resizeImage(bytes, 800, 400);
+    //
+    //   updateFunction(resizedBytes);
+    // }
+  }
+
+  Widget _buildTextField(String label, ConfirmIdViewModel viewModel) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(
@@ -34,7 +112,7 @@ class ConfirmIdCard extends StackedView<DashboardViewModel> {
     );
   }
 
-  Widget _buildDatePicker(BuildContext context, String label, DashboardViewModel viewModel) {
+  Widget _buildDatePicker(BuildContext context, String label, ConfirmIdViewModel viewModel) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: GestureDetector(
@@ -79,14 +157,14 @@ class ConfirmIdCard extends StackedView<DashboardViewModel> {
     );
   }
 
-  Widget _buildGenderDropdown(DashboardViewModel viewModel) {
+  Widget _buildCardTypeDropdown(ConfirmIdViewModel viewModel) {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
         border: OutlineInputBorder(),
-        labelText: 'Gender',
+        labelText: 'ID Card Type',
       ),
       value: viewModel.selectedGender, // Make sure to manage this state in your viewModel
-      items: <String>['Male', 'Female', 'Other'].map((String value) {
+      items: <String>['Drivers License', 'National ID', 'Other'].map((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
@@ -100,10 +178,10 @@ class ConfirmIdCard extends StackedView<DashboardViewModel> {
   }
 
   @override
-  Widget builder(BuildContext context, DashboardViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, ConfirmIdViewModel viewModel, Widget? child) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Information', style: GoogleFonts.rubik(
+        title: Text('Confirm your Id Card', style: GoogleFonts.rubik(
           textStyle: TextStyle(
               fontSize: 18,
               color: Colors.black,  // Adjust color as needed
@@ -120,48 +198,15 @@ class ConfirmIdCard extends StackedView<DashboardViewModel> {
         child: ListView(
           children: [
             verticalSpaceSmall,
-            _buildTextField('First Name', viewModel),
-            _buildTextField('Last Name', viewModel),
-            DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'State',
-              ),
-              value: viewModel.selectedState,
-              items: viewModel.states.map((String state) {
-                return DropdownMenuItem<String>(
-                  value: state,
-                  child: Text(state),
-                );
-              }).toList(),
-              onChanged: (String? value) {
-                if (value != null) {
-                  viewModel.onStateSelected(value);
-                }
-              },
-            ),
-            SizedBox(height: 20),
-            DropdownButtonFormField<String>(
-              isExpanded: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Local Government',
-              ),
-              items: viewModel.lgas.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value, overflow: TextOverflow.ellipsis,),
-                );
-              }).toList(),
-              onChanged: (value) {
-                // Handle LGA selection if needed
-              },
-              value: viewModel.lgas.isNotEmpty ? viewModel.lgas.first : null,
-            ),
-            _buildTextField('Address', viewModel),
-            _buildGenderDropdown(viewModel),
+            _buildCardTypeDropdown(viewModel),
+            _buildTextField('ID Card number', viewModel),
             _buildDatePicker(context, 'Date of Birth', viewModel),
-            verticalSpaceMassive,
+            verticalSpaceSmall,
+            LocalFilePicker(
+              fileAction: viewModel.idCardBytes,
+              onFilePicked: viewModel.updateIdCardByte,
+            ),
+            verticalSpaceLarge,
             SubmitButton(
               isLoading: viewModel.isBusy,
               boldText: true,
@@ -170,7 +215,7 @@ class ConfirmIdCard extends StackedView<DashboardViewModel> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FaceCaptureView(),
+                    builder: (context) => AssignQrCode(),
                   ),
                 );
               },
@@ -183,5 +228,5 @@ class ConfirmIdCard extends StackedView<DashboardViewModel> {
   }
 
   @override
-  DashboardViewModel viewModelBuilder(BuildContext context) => DashboardViewModel();
+  ConfirmIdViewModel viewModelBuilder(BuildContext context) => ConfirmIdViewModel();
 }
